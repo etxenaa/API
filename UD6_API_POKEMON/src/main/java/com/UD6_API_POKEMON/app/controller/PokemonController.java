@@ -25,8 +25,12 @@ public class PokemonController {
 	PokemonRepository poRepo;
 
 	@GetMapping({"", "/"})
-	public List<Pokemon> pokemon() {
-		return poRepo.findAll();
+	public ResponseEntity<?> pokemon() {
+		List<Pokemon> pokemonList = poRepo.findAll();
+		if(poRepo.findAll().isEmpty()) {
+			return new ResponseEntity<String>("Ez da pokemonik existitzen", HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.ok(pokemonList);
 	}
 
 	@GetMapping("/{id}")
