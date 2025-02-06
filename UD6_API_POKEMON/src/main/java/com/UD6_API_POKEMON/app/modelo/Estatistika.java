@@ -1,5 +1,7 @@
 package com.UD6_API_POKEMON.app.modelo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +18,8 @@ public class Estatistika {
 	private int atakea;
 	private int defentsa;
 	private int abiadura;
-
+	
+	@JsonBackReference
 	@OneToOne(mappedBy = "estatistika")
 	private Pokemon pokemon;
 }

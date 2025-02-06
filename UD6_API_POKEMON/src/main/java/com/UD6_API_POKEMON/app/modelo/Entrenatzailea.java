@@ -7,6 +7,9 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Getter
 @Setter
@@ -18,7 +21,19 @@ public class Entrenatzailea {
 
 	private String izena;
 	private int adina;
-
+	
+	@JsonBackReference
 	@ManyToMany(mappedBy = "entrenatzaileak")
 	private Set<Pokemon> pokemonak = new HashSet<>();
+	
+	@JsonProperty("pokemon_izena")
+	public String getPokeIzenak() {
+		String itzuli = "";
+		for (Pokemon p : pokemonak) {
+			if (itzuli != "") 
+				itzuli += ",";
+			itzuli += p.getIzena();
+		}
+		return itzuli;
+	}
 }
